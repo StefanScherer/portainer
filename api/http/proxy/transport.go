@@ -6,6 +6,7 @@ import (
 	"path"
 	"strings"
 
+  "github.com/Microsoft/go-winio"
 	"github.com/portainer/portainer"
 	"github.com/portainer/portainer/http/security"
 )
@@ -34,6 +35,14 @@ func newSocketTransport(socketPath string) *http.Transport {
 	return &http.Transport{
 		Dial: func(proto, addr string) (conn net.Conn, err error) {
 			return net.Dial("unix", socketPath)
+		},
+	}
+}
+
+func newNpipeTransport(npipePath string) *http.Transport {
+	return &http.Transport{
+		Dial: func(proto, addr string) (conn net.Conn, err error) {
+			return winio.DialPipe(npipePath, nil)
 		},
 	}
 }

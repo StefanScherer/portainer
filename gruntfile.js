@@ -32,7 +32,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'config:dev',
     'clean:app',
-    'shell:buildBinary:linux:amd64',
+    'shell:buildBinary:windows:amd64',
     'vendor:regular',
     'html2js',
     'useminPrepare:dev',

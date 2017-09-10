@@ -47,7 +47,7 @@ func endpointSyncError(err error, logger *log.Logger) bool {
 
 func isValidEndpoint(endpoint *portainer.Endpoint) bool {
 	if endpoint.Name != "" && endpoint.URL != "" {
-		if !strings.HasPrefix(endpoint.URL, "unix://") && !strings.HasPrefix(endpoint.URL, "tcp://") {
+		if !strings.HasPrefix(endpoint.URL, "unix://") && !strings.HasPrefix(endpoint.URL, "tcp://") && !strings.HasPrefix(endpoint.URL, "npipe://") {
 			return false
 		}
 		return true

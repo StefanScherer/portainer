@@ -1,0 +1,6 @@
+FROM microsoft/nanoserver-insider
+COPY dist/ /
+COPY dist/portainer-windows-amd64 /portainer.exe
+VOLUME C:\\data
+EXPOSE 9000
+ENTRYPOINT [ "/portainer.exe" ]

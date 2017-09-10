@@ -45,6 +45,8 @@ func (manager *Manager) CreateAndRegisterProxy(endpoint *portainer.Endpoint) (ht
 		} else {
 			proxy = manager.proxyFactory.newHTTPProxy(endpointURL)
 		}
+	} else if endpointURL.Scheme == "npipe" {
+		proxy = manager.proxyFactory.newNpipeProxy(endpointURL.Path)
 	} else {
 		// Assume unix:// scheme
 		proxy = manager.proxyFactory.newSocketProxy(endpointURL.Path)
