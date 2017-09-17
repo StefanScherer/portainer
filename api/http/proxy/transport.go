@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"path"
 	"strings"
+	"time"
 
 	"github.com/Microsoft/go-winio"
 	"github.com/portainer/portainer"
@@ -42,7 +43,17 @@ func newSocketTransport(socketPath string) *http.Transport {
 func newNamedPipeTransport(namedPipePath string) *http.Transport {
 	return &http.Transport{
 		Dial: func(proto, addr string) (conn net.Conn, err error) {
-			return winio.DialPipe(namedPipePath, nil)
+			attempts := 3
+			for {
+				attempts--
+				conn, err = winio.DialPipe(namedPipePath, nil)
+				if attempts > 0 && err != nil {
+					time.Sleep(10 * time.Millisecond)
+				} else {
+					break
+				}
+			}
+			return conn, err
 		},
 	}
 }
